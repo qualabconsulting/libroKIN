@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Viaje de Kin: Episodio I - El Amuleto de la Luna | José Guerrero</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --color-bg: #05070a;
+            --color-bg-alt: #0d1117;
+            --color-glass: rgba(20, 30, 45, 0.6);
+            --color-accent: #d4af37; /* Dorado */
+            --color-accent-glow: #ffd700;
+            --color-magic-blue: #00b4d8; /* Azul mágico */
+            --color-magic-blue-glow: #48cae4;
+            --color-wa: #25D366;
+            --color-text: #e0e0e0;
+            --color-text-muted: #8892a0;
+            --font-title: 'Cinzel', serif;
+            --font-body: 'Lato', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Fondo Mágico (Auras y Partículas) */
+        .magic-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(0, 180, 216, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+                #05070a;
+        }
+        
+        .magic-particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0;
+            animation: floatUp 15s linear infinite;
+            filter: blur(1px);
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        /* Hero Section */
+        header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 4rem;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .hero-image {
+            flex: 1 1 350px;
+            max-width: 400px;
+            position: relative;
+            animation: floatBook 6s ease-in-out infinite;
+        }
+
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            top: -20px; left: -20px; right: -20px; bottom: -20px;
+            background: radial-gradient(circle, rgba(0, 180, 216, 0.3) 0%, transparent 70%);
+            z-index: -1;
+            border-radius: 50%;
+            filter: blur(40px);
+            animation: pulseAura 4s ease-in-out infinite;
+        }
+
+        @keyframes floatBook {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        @keyframes pulseAura {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            display: block;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 50px rgba(0, 180, 216, 0.2);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .hero-text {
+            flex: 1 1 400px;
+            max-width: 600px;
+            text-align: left;
+        }
+
+        .hero-tag {
+            font-family: var(--font-title);
+            color: var(--color-magic-blue-glow);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: block;
+            text-shadow: 0 0 10px var(--color-magic-blue-glow);
+        }
+
+        h1 {
+            font-family: var(--font-title);
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            text-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+            font-weight: 900;
+            background: linear-gradient(to right, #fff, #a5d8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-family: var(--font-title);
+            font-size: 1.5rem;
+            color: var(--color-accent);
+            margin-bottom: 2rem;
+            font-weight: 400;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .hero-description {
+            font-size: 1.15rem;
+            color: var(--color-text-muted);
+            margin-bottom: 2.5rem;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--color-accent) 0%, #b8860b 100%);
+            color: #000;
+            padding: 1.2rem 3rem;
+            font-family: var(--font-title);
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+            border: 2px solid transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.7);
+            background: transparent;
+            color: var(--color-accent);
+            border: 2px solid var(--color-accent);
+        }
+
+        .wa-btn {
+            background: linear-gradient(135deg, var(--color-wa) 0%, #128C7E 100%);
+            color: #fff;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+        }
+        .wa-btn:hover {
+            background: transparent;
+            color: var(--color-wa);
+            border: 2px solid var(--color-wa);
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.7);
+        }
+
+        /* Secciones Generales */
+        section {
+            padding: 6rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h2 {
+            font-family: var(--font-title);
+            font-size: 2.8rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+        
+        .section-divider {
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--color-magic-blue), transparent);
+            margin: 0 auto 3rem auto;
+            border-radius: 2px;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--color-glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+        }
+
+        /* Sinopsis */
+        .synopsis p {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-text);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .synopsis .first-letter::first-letter {
+            font-family: var(--font-title);
+            font-size: 4rem;
+            float: left;
+            line-height: 0.8;
+            margin-right: 12px;
+            margin-top: 5px;
+            color: var(--color-magic-blue-glow);
+            font-weight: 700;
+            text-shadow: 0 0 15px var(--color-magic-blue);
+        }
+
+        /* Countdown */
+        .countdown-section { background: rgba(0,0,0,0.3); }
+        .countdown-container {
+            display: flex; justify-content: center;
+            gap: 1.5rem; margin-top: 2rem;
+        }
+        .time-box {
+            background: rgba(0, 180, 216, 0.05);
+            border: 1px solid var(--color-magic-blue);
+            padding: 1.5rem 2rem; border-radius: 12px;
+            min-width: 100px;
+            box-shadow: 0 0 20px rgba(0, 180, 216, 0.2);
+        }
+        .time-number { font-family: var(--font-title); font-size: 3rem; color: #fff; font-weight: 700; }
+        .time-label { color: var(--color-magic-blue-glow); text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; }
+
+        /* Características y Reseñas */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem; margin-top: 3rem;
+        }
+        .glass-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--color-magic-blue);
+            box-shadow: 0 15px 40px rgba(0, 180, 216, 0.2);
+        }
+        .feature-icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; color: var(--color-accent); }
+        .feature-card h3 { font-family: var(--font-title); color: #fff; margin-bottom: 1rem; font-size: 1.4rem; }
+        
+        .reviews-grid { text-align: left; }
+        .review-card { border-left: 4px solid var(--color-magic-blue); }
+        .stars { color: var(--color-accent-glow); margin-bottom: 1rem; font-size: 1.2rem; }
+        .review-text { font-style: italic; color: var(--color-text); margin-bottom: 1rem; }
+        .review-author { font-weight: 700; color: var(--color-magic-blue-glow); font-family: var(--font-title); }
+
+        /* Datos de Pago (Estilo Arcano) */
+        .payment-box {
+            text-align: left;
+            margin-top: 2rem;
+        }
+        .payment-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .payment-row:last-child { border-bottom: none; }
+        .payment-label { font-family: var(--font-title); color: var(--color-text-muted); font-size: 0.9rem; text-transform: uppercase; }
+        .payment-value { color: #fff; font-weight: 700; font-size: 1.1rem; letter-spacing: 1px; }
+        .copy-btn {
+            background: var(--color-magic-blue);
+            color: #000; border: none;
+            padding: 0.5rem 1rem; border-radius: 5px;
+            cursor: pointer; font-weight: 700;
+            transition: all 0.2s; font-size: 0.8rem;
+        }
+        .copy-btn:hover { background: var(--color-magic-blue-glow); }
+        .copy-btn.copied { background: var(--color-wa); color: #fff; }
+
+        /* CTA Final */
+        .price-amount {
+            font-family: var(--font-title); font-size: 4rem;
+            color: #fff; font-weight: 700; display: block;
+            margin: 1rem 0;
+            text-shadow: 0 0 30px var(--color-magic-blue-glow);
+        }
+
+        /* Animación Scroll Reveal */
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 1s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.8rem; }
+            .hero-container { flex-direction: column; text-align: center; gap: 2rem; }
+            .hero-text { text-align: center; }
+            .time-number { font-size: 2rem; }
+            .time-box { padding: 1rem; min-width: 70px; }
+            .countdown-container { gap: 0.5rem; }
+            .payment-row { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="magic-bg"></div>
+    <div class="magic-particles" id="particles"></div>
+
+    <!-- HERO SECTION -->
+    <header>
+        <div class="hero-container">
+            <div class="hero-image">
+                <img src="https://z-cdn-media.chatglm.cn/files/fa140609-2327-4d67-bfeb-4274117acd6c.jpg?auth_key=1881982455-ec30518543bf48b49f3e9b7aaa67f9bc-0-1a062108a07aee34620034f584bcab91" alt="Portada del libro El Viaje de Kin">
+            </div>
+            <div class="hero-text">
+                <span class="hero-tag">Nueva Novela de Fantasía Épica</span>
+                <h1>EL VIAJE DE KIN</h1>
+                <p class="subtitle">Episodio I: El Amuleto de la Luna</p>
+                <p class="hero-description">
+                    Adéntrate en un bosque ancestral donde la luz y la sombra librán una guerra silenciosa. Sigue a Kin y a sus compañeros en una aventura que desafiará los límites de la magia y el coraje. 
+                </p>
+                <a href="#comprar" class="cta-btn"><i class="fas fa-scroll"></i> Comprar Libro Digital</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- SINOPSIS -->
+    <section class="synopsis reveal">
+        <div class="container">
+            <h2>La Aventura Comienza</h2>
+            <div class="section-divider"></div>
+            <p class="first-letter">El Viaje de Kin: Episodio I – El Amuleto de la Luna es una novela de fantasía épica llena de aventura, magia, amistad, sacrificio y descubrimiento personal.</p>
+            <p>Una historia que invita al lector a explorar un mundo extraordinario donde cada decisión puede cambiar el destino de toda una civilización.</p>
+        </div>
+    </section>
+
+    <!-- CUENTA REGRESIVA -->
+    <section class="countdown-section reveal">
+        <div class="container">
+            <h2>Oferta de Lanzamiento Exclusiva</h2>
+            <div class="section-divider"></div>
+            <p style="font-size: 1.2rem; color: var(--color-text-muted);">El precio especial de lanzamiento termina en:</p>
+            <div class="countdown-container">
+                <div class="time-box">
+                    <div class="time-number" id="days">00</div>
+                    <div class="time-label">Días</div>
+                </div>
+                <div class="time-box">
+                    <div class="time-number" id="hours">00</div>
+                    <div class="time-label">Horas</div>
+                </div>
+                <div class="time-box">
+                    <div class="time-number" id="minutes">00</div>
+                    <div class="time-label">Min</div>
+                </div>
+                <div class="time-box">
+                    <div class="time-number" id="seconds">00</div>
+                    <div class="time-label">Seg</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CARACTERÍSTICAS -->
+    <section class="features reveal">
+        <div class="container">
+            <h2>Por qué debes leerlo</h2>
+            <div class="section-divider"></div>
+            <div class="grid-3">
+                <div class="glass-card feature-card">
+                    <span class="feature-icon"><i class="fas fa-gem"></i></span>
+                    <h3>La Esencia de Aurora</h3>
+                    <p>Descubre el poder primigenio que late en el corazón de Aurora. Un sistema de magia profundo y misterioso que rige la vida y el equilibrio del mundo.</p>
+                </div>
+                <div class="glass-card feature-card">
+                    <span class="feature-icon"><i class="fas fa-cloud"></i></span>
+                    <h3>Ciudades Flotantes</h3>
+                    <p>Explora las majestuosas Ciudades Flotantes, hogar de los sabios, donde los antiguos secretos y los pergaminos milenarios guardan el destino de la civilización.</p>
+                </div>
+                <div class="glass-card feature-card">
+                    <span class="feature-icon"><i class="fas fa-balance-scale-right"></i></span>
+                    <h3>Destino y Sacrificio</h3>
+                    <p>Acompaña a Kin en un viaje de autodescubrimiento. Amistad, sacrificio y decisiones que forjarán el futuro de una civilización entera.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RESEÑAS -->
+    <section class="reviews reveal">
+        <div class="container">
+            <h2>Lo que dicen los lectores</h2>
+            <div class="section-divider"></div>
+            <div class="grid-3 reviews-grid">
+                <div class="glass-card review-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">"Desde el prólogo, la forma en que José Guerrero describe el poder primigenio de la Esencia en el corazón de Aurora te atrapa. La introducción a las Ciudades Flotantes es visualmente espectacular. ¡Un comienzo épico!"</p>
+                    <p class="review-author">- Carlos Mendoza</p>
+                </div>
+                <div class="glass-card review-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">"El misterio que rodea al pergamino milenario descubierto por los sabios es genial. Me encantó cómo la historia mezcla la sabiduría ancestral con el viaje personal de Kin. Es fantasía clásica pero con un mundo muy original."</p>
+                    <p class="review-author">- Laura Jiménez</p>
+                </div>
+                <div class="glass-card review-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">"La idea de las Ciudades Flotantes en las alturas me recordó a las grandes sagas de fantasía. El descubrimiento del pergamino y cómo conecta con la Esencia promete una saga enorme. No pude soltar el libro."</p>
+                    <p class="review-author">- David Fuentes</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AUTOR -->
+    <section class="author-section reveal">
+        <div class="container">
+            <h2>El Autor</h2>
+            <div class="section-divider"></div>
+            <p style="max-width: 700px; margin: 0 auto; font-size: 1.2rem;">
+                <strong>José Guerrero</strong> es un apasionado narrador de mundos fantásticos. Con *El Viaje de Kin*, debutó en el mundo de la literatura épica, tejiendo una narrativa que combina la nostalgia de la fantasía clásica con giros modernos. Su pluma te transportará directamente al corazón de la aventura.
+            </p>
+        </div>
+    </section>
+
+    <!-- CTA FINAL Y PAGOS -->
+    <section class="final-cta reveal" id="comprar">
+        <div class="container">
+            <h2>Obtén tu Copia Digital Hoy</h2>
+            <div class="section-divider"></div>
+            <p style="font-size: 1.2rem; color: var(--color-text-muted);">Precio especial de lanzamiento</p>
+            <span class="price-amount">$149 MXN</span>
+            
+            <div class="glass-card" style="max-width: 600px; margin: 0 auto 3rem auto;">
+                <h3 style="font-family: var(--font-title); color: var(--color-accent); margin-bottom: 1rem;">
+                    <i class="fas fa-shield-alt"></i> Datos para el Depósito
+                </h3>
+                <div class="payment-box">
+                    <div class="payment-row">
+                        <span class="payment-label">Banco:</span>
+                        <span class="payment-value">BBVA</span>
+                    </div>
+                    <div class="payment-row">
+                        <span class="payment-label">Titular:</span>
+                        <span class="payment-value">Jose Guerrero Garfias</span>
+                    </div>
+                    <div class="payment-row">
+                        <span class="payment-label">Tarjeta (Depósito):</span>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <span class="payment-value" id="card-number">4152 3145 9813 3463</span>
+                            <button class="copy-btn" onclick="copyText('4152314598133463', this)"><i class="fas fa-copy"></i> Copiar</button>
+                        </div>
+                    </div>
+                    <div class="payment-row">
+                        <span class="payment-label">CLABE (Transferencia):</span>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <span class="payment-value" id="clabe-number">012 074 01558 66564 37</span>
+                            <button class="copy-btn" onclick="copyText('012074015586656437', this)"><i class="fas fa-copy"></i> Copiar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="https://wa.me/524921344124?text=Hola%20Jos%C3%A9.%20Realic%C3%A9%20el%20pago%20por%20El%20Viaje%20de%20Kin.%20Adjunto%20mi%20comprobante,%20mi%20nombre%20y%20mi%20correo%20electr%C3%B3nico." target="_blank" class="cta-btn wa-btn">
+                <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i> Enviar Comprobante por WhatsApp
+            </a>
+            
+            <p style="margin-top: 1.5rem; color: var(--color-text-muted); font-size: 0.9rem;">
+                <i class="fas fa-file-pdf"></i> Formato PDF · Entrega inmediata al confirmar pago<br>
+                WhatsApp: 4921344124
+            </p>
+        </div>
+    </section>
+
+    <footer style="padding: 2rem; text-align: center; font-size: 0.9rem; color: var(--color-text-muted); background: #020305; position: relative; z-index: 1;">
+        <p>&copy; 2026 José Guerrero. Todos los derechos reservados. "El Viaje de Kin" es una obra de ficción.</p>
+    </footer>
+
+    <script>
+        // 1. Crear partículas mágicas (Dorado y Azul)
+        const particlesContainer = document.getElementById('particles');
+        const colors = ['#d4af37', '#00b4d8', '#ffffff'];
+        
+        for (let i = 0; i < 40; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            const size = Math.random() * 4 + 1;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.background = color;
+            particle.style.boxShadow = `0 0 ${size * 3}px ${color}`;
+            
+            const duration = Math.random() * 15 + 10;
+            const delay = Math.random() * 20;
+            particle.style.animationDuration = `${duration}s`;
+            particle.style.animationDelay = `${delay}s`;
+
+            particlesContainer.appendChild(particle);
+        }
+
+        // 2. Animación de Scroll Reveal
+        const revealElements = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+        revealElements.forEach(el => observer.observe(el));
+
+        // 3. Countdown Timer
+        let timeLeft = 3 * 24 * 60 * 60;
+        function updateCountdown() {
+            const days = Math.floor(timeLeft / (24 * 60 * 60));
+            const hours = Math.floor((timeLeft % (24 * 60 * 60)) / (60 * 60));
+            const minutes = Math.floor((timeLeft % (60 * 60)) / 60);
+            const seconds = Math.floor(timeLeft % 60);
+
+            document.getElementById('days').innerText = days < 10 ? '0' + days : days;
+            document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
+            document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+
+            if (timeLeft > 0) { timeLeft--; } else { timeLeft = 3 * 24 * 60 * 60; }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // 4. Función para copiar al portapapeles
+        function copyText(text, btn) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i> ¡Copiado!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                alert('No se pudo copiar automáticamente. Por favor cópialo manualmente: ' + text);
+            });
+        }
+    </script>
+</body>
+</html>
